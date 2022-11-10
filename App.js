@@ -1,32 +1,39 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useState } from 'react'
+import CounterComp from './CounterComp'
 
 const App = () => {
 
   const [number, setNumber] = useState(0)
+  const [randomNumber, sertRandomNumber] = useState(0)
+  const onRandom = useCallback(() => {
+    sertRandomNumber(Math.random)
+  }, [])
 
-  const OnIncreament = useCallback (()=>{
+  const OnIncreament = useCallback(() => {
     setNumber(number + 1)
-  },[number])
+  }, [number])
 
-  const OnDecreament = useCallback(()=>{
+  const OnDecreament = useCallback(() => {
     setNumber(number <= 0 ? 0 : number - 1)
-  },[number])
- 
+  }, [number])
+
   return (
     <View style={styles.Main}>
-      
-      <View style={{alignItems:'center',alignContent:'center'}}>
+
+      <View style={{ alignItems: 'center', alignContent: 'center' }}>
+
+        <Text onPress={onRandom} style={styles.text}>{randomNumber}</Text>
         <TouchableOpacity
-        onPress={OnDecreament}
+          onPress={OnDecreament}
         >
-        <Text style={styles.text}>-</Text>
+          <Text style={styles.text}>-</Text>
         </TouchableOpacity>
-      <Text style={styles.text}>{number}</Text>
-      <TouchableOpacity
-        onPress={OnIncreament}
+        <CounterComp number={number} />
+        <TouchableOpacity
+          onPress={OnIncreament}
         >
-        <Text style={styles.text}>+</Text>
+          <Text style={styles.text}>+</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,9 +48,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text:{
-    color:'#000000',
-    fontWeight:'bold',
-    fontSize:40
+  text: {
+    color: '#000000',
+    fontWeight: 'bold',
+    fontSize: 40
   }
 })
