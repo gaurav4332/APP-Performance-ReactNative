@@ -11,4 +11,5 @@ const CounterComp = ({number}) => {
 }
 
 export default React.memo(CounterComp)
+// export default CounterComp
 

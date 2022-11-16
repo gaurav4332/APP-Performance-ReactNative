@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import CounterComp from './CounterComp'
 
 const App = () => {
@@ -12,11 +12,23 @@ const App = () => {
 
   const OnIncreament = useCallback(() => {
     setNumber(number + 1)
-  }, [number])
+  }, [number])  
+  
 
   const OnDecreament = useCallback(() => {
     setNumber(number <= 0 ? 0 : number - 1)
   }, [number])
+
+
+  const expansiveCalculation =(num) =>{
+    console.log("CalCulating...");
+    for(let i=0 ; i<1000000; i++){
+      num +=1;
+    }
+    return num;
+  };
+  
+  const Calculation = useMemo (()=>expansiveCalculation(number),[number])
 
   return (
     <View style={styles.Main}>
@@ -29,6 +41,9 @@ const App = () => {
         >
           <Text style={styles.text}>-</Text>
         </TouchableOpacity>
+
+        <Text>Memorised Value</Text>
+        <Text>{Calculation}</Text>
         <CounterComp number={number} />
         <TouchableOpacity
           onPress={OnIncreament}
